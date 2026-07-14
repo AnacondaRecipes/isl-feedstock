@@ -1,4 +1,4 @@
-{% set version = "0.22.1" %}
+{% set version = "0.28" %}
 
 package:
   name: isl
@@ -7,13 +7,13 @@ package:
 source:
   fn: isl-{{ version }}.tar.xz
   url: https://libisl.sourceforge.io/isl-{{ version }}.tar.xz
-  sha256: 28658ce0f0bdb95b51fd2eb15df24211c53284f6ca2ac5e897acc3169e55b60f
+  sha256: 3dc31b8e1b18329e42d5dfbf84dd55e15c59b61569a2ab246f61497d9592f727
   patches:
     # From https://github.com/msys2/MINGW-packages/blob/master/mingw-w64-isl/isl-0.14.1-no-undefined.patch
     - no_undefined.patch  # [win]
 
 build:
-  number: 3
+  number: 0
   run_exports:
     - {{ pin_subpackage("isl", max_pin="x.x") }}
 
@@ -21,21 +21,20 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - libtool                # [unix]
+    - libtool  # [unix]
     - autotools_clang_conda  # [win]
-    - make                   # [unix]
-    - m2-patch    # [win]
- 
+    - make  # [unix]
+
 test:
   commands:
-    - if not exist %LIBRARY_LIB%\\isl.lib exit 1            # [win]
-    - if not exist %LIBRARY_INC%\\isl\\options.h exit 1     # [win]
-    - test ! -f "$PREFIX/lib/libisl.a"          # [unix]
+    - if not exist %LIBRARY_LIB%\\isl.lib exit 1  # [win]
+    - if not exist %LIBRARY_INC%\\isl\\options.h exit 1  # [win]
+    - test ! -f "$PREFIX/lib/libisl.a"  # [unix]
     - test -f "$PREFIX/lib/libisl${SHLIB_EXT}"  # [unix]
-    - test -d "$PREFIX/include/isl"             # [unix]
+    - test -d "$PREFIX/include/isl"  # [unix]
 
 about:
-  home: http://isl.gforge.inria.fr/
+  home: https://isl.gforge.inria.fr/
   license: MIT
   license_family: MIT
   license_file: LICENSE
