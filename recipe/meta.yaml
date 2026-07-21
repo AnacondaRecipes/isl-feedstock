@@ -24,7 +24,7 @@ requirements:
     - libtool  # [unix]
     - autotools_clang_conda  # [win]
     - make  # [unix]
-    - m2-patch  # [win]
+    - msys2-patch  # [win]
 
 test:
   commands:
@@ -35,17 +35,11 @@ test:
     - test -d "$PREFIX/include/isl"  # [unix]
 
 about:
-  home: https://libisl.sourceforge.io/
+  home: https://isl.gforge.inria.fr/
   license: MIT
   license_family: MIT
   license_file: LICENSE
   summary: a thread-safe C library for manipulating sets and relations of integer points bounded by affine constraints.
-  description: |
-    isl is a thread-safe C library for manipulating sets and relations of integer
-    points bounded by affine constraints. It is used as the polyhedral loop
-    optimizer (Graphite) backend in GCC and by related compiler toolchain packages.
-  dev_url: https://repo.or.cz/isl.git
-  doc_url: https://libisl.sourceforge.io/user.html
 
 extra:
   recipe-maintainers:
