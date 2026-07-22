@@ -8,6 +8,7 @@ if [[ "$target_platform" == "win-64" ]]; then
   export LIBRARY_INC=$(cygpath -u "$LIBRARY_INC")
   export LIBRARY_LIB=$(cygpath -u "$LIBRARY_LIB")
   export LDFLAGS="-L${LIBRARY_LIB} -fuse-ld=lld -nostdlib -Xclang --dependent-lib=msvcrt"
+  export PYTHON=:
   autoreconf -iv
   ./configure --prefix=$PREFIX --with-int=imath-32 --disable-shared || (cat config.log && false)
   patch_libtool
