@@ -3,6 +3,12 @@
 if [[ "$target_platform" == "win-64" ]]; then
   export CFLAGS="$CFLAGS -O3 -Dstrdup=_strdup"
   export ac_cv_have_decl__BitScanForward=yes
+  export LIBRARY_PREFIX=$(cygpath -u "$LIBRARY_PREFIX")
+  export LIBRARY_BIN=$(cygpath -u "$LIBRARY_BIN")
+  export LIBRARY_INC=$(cygpath -u "$LIBRARY_INC")
+  export LIBRARY_LIB=$(cygpath -u "$LIBRARY_LIB")
+  export LDFLAGS="-L${LIBRARY_LIB} -fuse-ld=lld -nostdlib -Xclang --dependent-lib=ucrt"
+  export PYTHON=:
   autoreconf -iv
   ./configure --prefix=$PREFIX --with-int=imath-32 --disable-shared || (cat config.log && false)
   patch_libtool

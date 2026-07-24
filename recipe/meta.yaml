@@ -1,21 +1,22 @@
-{% set version = "0.22.1" %}
+{% set name = "isl" %}
+{% set version = "0.28" %}
 
 package:
-  name: isl
+  name: {{ name }}
   version: {{ version }}
 
 source:
-  fn: isl-{{ version }}.tar.xz
-  url: https://libisl.sourceforge.io/isl-{{ version }}.tar.xz
-  sha256: 28658ce0f0bdb95b51fd2eb15df24211c53284f6ca2ac5e897acc3169e55b60f
+  fn: {{ name }}-{{ version }}.tar.xz
+  url: https://libisl.sourceforge.io/{{ name }}-{{ version }}.tar.xz
+  sha256: 3dc31b8e1b18329e42d5dfbf84dd55e15c59b61569a2ab246f61497d9592f727
   patches:
     # From https://github.com/msys2/MINGW-packages/blob/master/mingw-w64-isl/isl-0.14.1-no-undefined.patch
     - no_undefined.patch  # [win]
 
 build:
-  number: 3
+  number: 0
   run_exports:
-    - {{ pin_subpackage("isl", max_pin="x.x") }}
+    - {{ pin_subpackage(name, max_pin="x.x") }}
 
 requirements:
   build:
@@ -24,8 +25,7 @@ requirements:
     - libtool                # [unix]
     - autotools_clang_conda  # [win]
     - make                   # [unix]
-    - m2-patch    # [win]
- 
+
 test:
   commands:
     - if not exist %LIBRARY_LIB%\\isl.lib exit 1            # [win]
@@ -35,11 +35,17 @@ test:
     - test -d "$PREFIX/include/isl"             # [unix]
 
 about:
-  home: http://isl.gforge.inria.fr/
+  home: https://libisl.sourceforge.io/
   license: MIT
   license_family: MIT
   license_file: LICENSE
   summary: a thread-safe C library for manipulating sets and relations of integer points bounded by affine constraints.
+  description: |
+    isl is a thread-safe C library for manipulating sets and relations of integer
+    points bounded by affine constraints. It is used as the polyhedral loop
+    optimizer (Graphite) backend in GCC and by related compiler toolchain packages.
+  dev_url: https://repo.or.cz/isl.git
+  doc_url: https://libisl.sourceforge.io/user.html
 
 extra:
   recipe-maintainers:
