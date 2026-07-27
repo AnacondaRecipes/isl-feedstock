@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ "$target_platform" == "win-64" ]]; then
-  export CFLAGS="$CFLAGS -O3 -Dstrdup=_strdup"
+  export CFLAGS="${CFLAGS/--dependent-lib=msvcrt/--dependent-lib=ucrt} -O3 -Dstrdup=_strdup"
   export ac_cv_have_decl__BitScanForward=yes
   export LIBRARY_PREFIX=$(cygpath -u "$LIBRARY_PREFIX")
   export LIBRARY_BIN=$(cygpath -u "$LIBRARY_BIN")
