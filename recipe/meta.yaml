@@ -31,16 +31,17 @@ test:
     - test-isl.c
   requires:
     - {{ compiler('c') }}
+    - {{ stdlib('c') }}
   commands:
     - if not exist %LIBRARY_LIB%\\isl.lib exit 1            # [win]
     - if not exist %LIBRARY_INC%\\isl\\options.h exit 1     # [win]
-    - cl.exe /MD /I%LIBRARY_INC% test-isl.c /link %LIBRARY_LIB%\isl.lib  # [win]
-    - test-isl.exe                                          # [win]
+    - cl.exe /MD -I%LIBRARY_INC% %RECIPE_DIR%\test-isl.c /Fe"%cd%\test-isl.exe" /link /LIBPATH:"%LIBRARY_LIB%" isl.lib  # [win]
+    - .\test-isl.exe                                                                                                   # [win]
     - test ! -f "$PREFIX/lib/libisl.a"          # [unix]
     - test -f "$PREFIX/lib/libisl${SHLIB_EXT}"  # [unix]
     - test -d "$PREFIX/include/isl"             # [unix]
-    - $CC -o test-isl test-isl.c -I$PREFIX/include -L$PREFIX/lib -lisl  # [unix]
-    - ./test-isl                                                       # [unix]
+    - eval "${CC} -I ${PREFIX}/include -L ${PREFIX}/lib test-isl.c -lisl -Wl,-rpath,${PREFIX}/lib -o test-isl.out"  # [unix]
+    - ./test-isl.out                                                                                                # [unix]
 
 about:
   home: https://libisl.sourceforge.io/
