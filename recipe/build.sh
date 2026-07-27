@@ -4,6 +4,10 @@ if [[ "$target_platform" == "win-64" ]]; then
   # We'd like to build a dynamic library on Windows but
   # isl_options_args is putting up a fight.  We'll keep the isl.lib
   # (static) library name to align with conda-forge.
+  #
+  # In addition, with no dynamic library, the Python module can't load
+  # it hence skipping the Python module tests (by making PYTHON be the
+  # no-op ":")
 
   # remove this substitution once autotools_clang_conda defaults to ucrt instead of msvcrt
   export CFLAGS="${CFLAGS/--dependent-lib=msvcrt/--dependent-lib=ucrt} -O3 -Dstrdup=_strdup"
