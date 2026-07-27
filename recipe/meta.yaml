@@ -57,6 +57,8 @@ about:
   doc_url: https://libisl.sourceforge.io/user.html
 
 extra:
+  skip-lints:
+    - reachable_url
   recipe-maintainers:
     - frol
     - isuruf
