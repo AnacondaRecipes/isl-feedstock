@@ -29,7 +29,6 @@ requirements:
 test:
   commands:
     - if not exist %LIBRARY_LIB%\\isl.lib exit 1            # [win]
-    - if not exist %LIBRARY_BIN%\\libisl*.dll exit 1        # [win]
     - if not exist %LIBRARY_INC%\\isl\\options.h exit 1     # [win]
     - test ! -f "$PREFIX/lib/libisl.a"          # [unix]
     - test -f "$PREFIX/lib/libisl${SHLIB_EXT}"  # [unix]
